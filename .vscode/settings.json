@@ -1,0 +1,6 @@
+{
+    "python.defaultInterpreterPath": "/usr/local/bin/python3",
+    "terminal.integrated.env.osx": {
+      "PATH": "/usr/local/bin:${env:PATH}"
+    }
+  }
