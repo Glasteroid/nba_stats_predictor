@@ -6,10 +6,7 @@ class OpponentStats:
         self.team_name = team_name
         self.season = season
         self.team_id = self.get_team_id()
-        if self.team_id:
-            self.defensive_rating = self.get_defensive_rating(self.season)
-        else:
-            self.defensive_rating = None
+        self.team_df = self.get_defensive_df(self.season)
 
     def get_team_id(self):
         team_data = teams.find_teams_by_full_name(self.team_name)
@@ -20,7 +17,7 @@ class OpponentStats:
             print(f'The given id for {self.team_name} is not valid')
             return None
 
-    def get_defensive_rating(self, season):
+    def get_defensive_df(self, season):
         season_str = f"{season}-{str(season + 1)[-2:]}"
         stats = LeagueDashTeamStats(
             season=season_str,
@@ -35,8 +32,7 @@ class OpponentStats:
         
         if not team_df.empty:
             # Return the team's defensive rating
-            defensive_rating = team_df[['DEF_RATING']].iloc[0]
-            return int(defensive_rating)
+            return team_df
         else:
             print(f"No data found for team ID: {self.team_id}")
             return None

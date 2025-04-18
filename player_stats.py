@@ -1,5 +1,5 @@
 from sklearn.model_selection import train_test_split
-from nba_api.stats.endpoints import PlayerCareerStats
+from nba_api.stats.endpoints import PlayerGameLog
 from nba_api.stats.static import players
 
 class PlayerStats:
@@ -21,14 +21,11 @@ class PlayerStats:
             return None
 
     def get_player_df(self):
-        career = PlayerCareerStats(self.player_id)
-        df = career.get_data_frames()[0]
+        season_str = f"{self.season}-{str(self.season + 1)[-2:]}"
+        game_log = PlayerGameLog(player_id=self.player_id, season=season_str)
+        df = game_log.get_data_frames()[0]
         
-        season_id = f"{self.season}-{str(self.season + 1)[2:]}"
-
-        average_df = df[df['SEASON_ID'] == season_id]
-        
-        return average_df[['PTS', 'REB', 'AST', 'STL', 'BLK', 'FG_PCT', 'FT_PCT']]
+        return df[['PTS', 'REB', 'AST', 'STL', 'BLK', 'FG_PCT', 'FT_PCT']]
 
     def display_stats(self):
         if self.df is not None:

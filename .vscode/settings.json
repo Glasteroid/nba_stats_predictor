@@ -1,5 +1,6 @@
 {
     "python.defaultInterpreterPath": "/usr/local/bin/python3",
+    "code-runner.runInTerminal": true,
     "terminal.integrated.env.osx": {
       "PATH": "/usr/local/bin:${env:PATH}"
     }
